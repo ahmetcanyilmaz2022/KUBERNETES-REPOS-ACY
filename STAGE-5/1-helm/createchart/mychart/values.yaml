@@ -1,0 +1,34 @@
+replicaCount: 1            # Pod sayısı
+
+image:
+  repository: nginx        # İmaj adı
+  pullPolicy: IfNotPresent # Varsa tekrar çekmez
+  tag: "latest"            # Versiyon
+
+service:
+  type: NodePort           # Servis tipi
+  port: 80                 # Servis portu
+
+ingress:
+  enabled: false           # Ingress kapalı
+
+resources: {}              # Kaynak sınırları (boş)
+
+nodeSelector: {}           # Node seçimi
+tolerations: []            # Tolerans yok
+affinity: {}               # Affinity yok
+
+serviceAccount:
+  create: false            # Yeni ServiceAccount oluşturma
+  name: ""
+  annotations: {}
+  automountServiceAccountToken: true
+
+httpRoute:
+  enabled: false           # HTTPRoute kullanılmıyor
+
+autoscaling:
+  enabled: false           # HPA devre dışı
+  minReplicas: 1           # Minimum pod
+  maxReplicas: 3           # Maksimum pod
+  targetCPUUtilizationPercentage: 80   # %80 CPU’da scale et
