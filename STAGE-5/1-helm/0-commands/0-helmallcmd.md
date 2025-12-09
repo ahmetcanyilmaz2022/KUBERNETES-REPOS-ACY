@@ -6,6 +6,10 @@ Aşağıdaki örneklerde `bitnami/nginx` chart’ı üzerinden ilerliyoruz.
 ---
 
 ## 📦 Repository İşlemleri
+### 0️⃣ Helm sürümünü gör
+```bash
+helm version
+```
 
 ### 1️⃣ Yeni repo ekle
 ```bash
@@ -30,7 +34,8 @@ helm search repo nginx
 
 ### 5️⃣ Chart indir (paket olarak)
 ```bash
-helm pull bitnami/nginx        
+helm pull bitnami/nginx    
+ls    
 ```
 
 ---
@@ -40,6 +45,10 @@ helm pull bitnami/nginx
 ### 6️⃣ Chart’ı yükle
 ```bash
 helm install my-nginx bitnami/nginx
+```
+> eğerki baştan conf. ayarlarını kişiselleştireceksem ;
+```bash
+helm install my-nginx bitnami/nginx -f values.yaml
 ```
 
 ### 7️⃣ Kurulu release’leri listele
@@ -90,6 +99,13 @@ helm upgrade --install my-nginx bitnami/nginx
 ```bash
 helm show values bitnami/nginx > values.yaml
 ```
+> bu values yaml file yapısında yapılan değişiklikleri update etmek için ise :
+```bash
+helm upgrade my-nginx bitnami/nginx -f values.yaml
+```
+```bash
+helm history my-nginx
+helm rollback my-nginx 1
 
 ### 15️⃣ Release’e ait tüm detaylar
 ```bash
@@ -172,7 +188,7 @@ helm create mychart
 
 ---
 
-📘 **Hazırlayan:** DevOpsThunder  
+📘 **Hazırlayan:** DevOpsThunder > Ahmet Can YILMAZ 
 💡 **Kullanım:**  
 Bu rehberi `helm-komutlar.md` olarak kaydedip terminal yanında açık tutarak hızlıca komutlara ulaşabilirsin.
 """

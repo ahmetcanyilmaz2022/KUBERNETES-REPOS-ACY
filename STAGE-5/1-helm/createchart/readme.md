@@ -1,6 +1,6 @@
 
 # chart oluştur
-helm create mychart
+* helm create mychart
 
 helm create mychart komutu, sıfırdan bir Helm chart iskeleti oluşturur.
 Bu yapıdan basit ama öğretici bir uygulama çıkarabiliriz — örneğin bir basit Nginx web uygulaması.

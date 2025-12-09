@@ -1,14 +1,14 @@
 
 1) Hazırlık — namespace ve storageclass kontrolü
 # namespace oluştur
-kubectl create namespace monitoring
+* kubectl create namespace monitoring
 
 # cluster'ın default storage class'ını kontrol et (persistence kullanacaksan)
-kubectl get storageclass
+* kubectl get storageclass
 
 2) Grafana Helm repo ekle ve güncelle
-helm repo add grafana https://grafana.github.io/helm-charts
-helm repo update
+* helm repo add grafana https://grafana.github.io/helm-charts
+* helm repo update
 
 2) Grafana kurulumu (Helm ile)
 
@@ -53,8 +53,8 @@ Pod yeniden başlasa da dashboard’lar kaybolmaz.
 
 4) Pod ve Servis durumlarını kontrol et
 
-kubectl get pods -n monitoring
-kubectl get svc -n monitoring
+* kubectl get pods -n monitoring
+* kubectl get svc -n monitoring
 
 örnek çıktı:
 grafana   NodePort   10.96.184.232   <none>   80:31543/TCP   2m
@@ -78,14 +78,14 @@ Tarayıcıda açtığında kullanıcı adı ve şifre ekranı gelir:
 
 Eğer şifreyi unuttuysan veya default chart kurduysan:
 
->kubectl get secret -n monitoring grafana -o jsonpath="{.data.admin-password}" | base64 --decode ; echo
+> kubectl get secret -n monitoring grafana -o jsonpath="{.data.admin-password}" | base64 --decode ; echo
 
 
 ###### ###### ####
 # ÖNEMLİ VALUES values.yaml local yapımıza çekelim 
-helm show values grafana/grafana > my-values.yaml
+* helm show values grafana/grafana > my-values.yaml
 # sadece values değerlerini göreyim 
-helm get values grafana -n monitoring
+* helm get values grafana -n monitoring
 
 # valuesde değişiklik için 
 a) Mevcut values’u çek:
@@ -110,7 +110,7 @@ helm upgrade grafana grafana/grafana -n monitoring -f current-values.yaml
 
 Docker Desktop Kubernetes ortamına Prometheus’u kurman gerekiyor:
 
-helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+* helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
 
 helm repo update
 
@@ -131,17 +131,14 @@ Grafana’yı zaten kurmuştun, şimdi Prometheus’u “data source” olarak e
 
 Yöntem 1 — Grafana UI üzerinden (kolay yöntem)
 	1.	Tarayıcıdan Grafana’yı aç:
-
-    kubectl get svc -n monitoring
-→ grafana servisinin NodePort değerini kopyala
-→ Örnek: http://localhost:30000
-
 	2.	Grafana’ya giriş yap (admin / Sifre123!)
 	3.	“Connections → Data Sources → Add data source” yolunu izle
 	4.	“Prometheus” seç
 	5.	URL kısmına şunu yaz:
-    gmag
-    6.	“Save & Test” de → ✅ “Data source is working” çıkarsa tamamdır
+  * http://prometheus-server.monitoring.svc.cluster.local
+  yada sadece 
+  * http://prometheus-server
+  6.“Save & Test” de → ✅ “Data source is working” çıkarsa tamamdır
 
 3️⃣ Pod metriklerini gör
 
@@ -162,6 +159,9 @@ Bu dashboard’ta:
 	•	Namespace bazlı pod grafikleri
 
                                                 |
+
+## FAVORİ DASHBOARD IM :)) K8S Dashboard :   15661
+
 | **Kubernetes Cluster Monitoring (via Prome** | **6417**     | Tüm cluster genelinde izleme: node, pod, namespace vb.         |
 | **Kubernetes Monitoring Dashboard**          | < **12740**  >  | Kubernetes metriklerini pod/çevre düzeyinde detaylı izleme     |
 | **Kubernetes Views / Pods**                  | **15760**    | Pod seviyesinde detaylı izleme için “views” tarzı panel        |
