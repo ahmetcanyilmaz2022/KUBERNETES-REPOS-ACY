@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demo-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: demo-app
+  template:
+    metadata:
+      labels:
+        app: demo-app
+    spec:
+      containers:
+        - name: demo-app
+          image: nginx
+          ports:
+            - containerPort: 8080
+          # Uygulamanın ilk ayağa kalkma süresi için
+          startupProbe:
+            httpGet:
+              path: /health/startup
+              port: 8080
+            failureThreshold: 30     # 30 kere dene
+            periodSeconds: 5         # 5 saniyede bir
+            # => Toplam bekleme: 30 x 5 = 150 saniye
+          # Trafik almaya hazır mı? (Service burayı baz alır)
+          readinessProbe:
+            httpGet:
+              path: /health/ready
+              port: 8080
+            initialDelaySeconds: 0
+            periodSeconds: 5
+            failureThreshold: 3
+          # Uygulama çökmüş mü? (Çökmüşse restart eder)
+          livenessProbe:
+            httpGet:
+              path: /health/live
+              port: 8080
+            initialDelaySeconds: 0
+            periodSeconds: 10
+            failureThreshold: 3
